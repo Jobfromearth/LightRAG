@@ -39,6 +39,9 @@ LightRAG 需要利用LLM和Embeding模型来完成文档索引和知识库查询
 从hugging face处拉取：https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF
 ```bash 
 wget https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF/resolve/main/nomic-embed-text-v1.5.f16.gguf
+```
+修改`Modelfile.nomic`
+```
 nano Modelfile.nomic
 ```
 粘贴以下内容
@@ -67,6 +70,10 @@ curl http://localhost:11434/api/embeddings -d '{
   "prompt": "hello world"
 }'
 ```
+运行emb模型:
+```
+ollama run nomic-embed-text
+```
 
 # 3.2 llm模型，例如Qwen2
 从Ollama处获得：https://ollama.com/library/qwen2:7b
@@ -74,7 +81,11 @@ curl http://localhost:11434/api/embeddings -d '{
 从hugging face处拉取：https://huggingface.co/Qwen/Qwen2-7B-Instruct-GGUF
 ```bash
 wget https://huggingface.co/Qwen/Qwen2-7B-Instruct-GGUF/resolve/main/qwen2-7b-instruct-q4_k_m.gguf
-nano Modelfile.nomic
+```
+
+修改`Modelfile`
+```
+nano Modelfile
 ```
 
 将以下内容粘贴进去
@@ -165,7 +176,7 @@ LightRAG/
 # 4. 解决 Tiktoken 离线 SSL 报错
 SSL 证书验证失败，LightRAG 在启动时需要下载一个名为 tiktoken 的编码文件（用于计算 Token 数量）。由于你的网络环境（可能是在公司内网或使用了代理）无法通过 SSL 验证连接到 OpenAI 的存储服务器，导致下载中断。
 
-手动下载文件： 在浏览器中打开以下链接，并将文件下载到你的 Ubuntu 机器上（比如放到 ~/workspaces/LightRAG/tokens/ 文件夹下）：[ o200k_base.tiktoken 下载链接](https://www.google.com/url?sa=E&source=gmail&q=https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken)
+手动下载文件： 在浏览器中打开以下链接，并将文件下载到你的 Ubuntu 机器上（比如放到 `~/workspaces/LightRAG/tokens/` 文件夹下）：[ o200k_base.tiktoken 下载链接](https://www.google.com/url?sa=E&source=gmail&q=https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken)
 
 通过模拟 tiktoken 库内部的缓存匹配机制，彻底欺骗程序，让它以为已经下载好了文件，此处参考：https://blog.csdn.net/chenxin0215/article/details/150491393
 
@@ -177,7 +188,7 @@ mkdir -p /home/h50056787/workspaces/LightRAG/tiktoken_cache
 ```
 mv /home/h50056787/workspaces/LightRAG/tokens/o200k_base.tiktoken /home/h50056787/workspaces/LightRAG/tiktoken_cache/fb374d419588a4632f3f557e76b4b70aebbca790
 ```
-在 Python 脚本中配置环境，修改 examples/lightrag_ollama_demo.py
+在 Python 脚本中配置环境，修改 `examples/lightrag_ollama_demo.py`
 ```python 
 import os
 # 指向刚才创建的那个包含哈希文件名文件的目录
@@ -236,10 +247,11 @@ embed_model=os.getenv("EMBEDDING_MODEL", "nomic-embed-text"),
 ```
 
 # 7. 运行脚本
+
 ```
 cd /home/h50056787/workspaces/LightRAG
 python examples/lightrag_ollama_demo.py
 ```
-检查日志: log文档为：/LightRAG/lightrag_ollama_demo.log
+检查日志: log文档为：`/LightRAG/lightrag_ollama_demo.log`
 
 
