@@ -11,8 +11,9 @@ from lightrag.utils import EmbeddingFunc, logger, set_verbose_debug
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=".env", override=False)
+os.environ["TIKTOKEN_CACHE_DIR"] = "/home/h50056787/workspaces/LightRAG/tiktoken_cache"
 
-WORKING_DIR = "./dickens"
+WORKING_DIR = "./dickens_ollama"
 
 
 def configure_logging():
@@ -86,7 +87,8 @@ async def initialize_rag():
     rag = LightRAG(
         working_dir=WORKING_DIR,
         llm_model_func=ollama_model_complete,
-        llm_model_name=os.getenv("LLM_MODEL", "qwen2.5-coder:7b"),
+        llm_model_name="qwen2m",
+        #llm_model_name=os.getenv("LLM_MODEL", "qwen2.5-coder:7b"),
         summary_max_tokens=8192,
         llm_model_kwargs={
             "host": os.getenv("LLM_BINDING_HOST", "http://localhost:11434"),
@@ -98,11 +100,11 @@ async def initialize_rag():
         # unwrapped function to avoid double wrapping when we create our own
         # EmbeddingFunc with custom configuration (embedding_dim, max_token_size).
         embedding_func=EmbeddingFunc(
-            embedding_dim=int(os.getenv("EMBEDDING_DIM", "1024")),
+            embedding_dim=int(os.getenv("EMBEDDING_DIM", "768")),
             max_token_size=int(os.getenv("MAX_EMBED_TOKENS", "8192")),
             func=partial(
                 ollama_embed.func,  # Access the unwrapped function to avoid double EmbeddingFunc wrapping
-                embed_model=os.getenv("EMBEDDING_MODEL", "bge-m3:latest"),
+                embed_model=os.getenv("EMBEDDING_MODEL", "nomic-embed-text"),
                 host=os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434"),
             ),
         ),

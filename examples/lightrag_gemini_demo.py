@@ -19,7 +19,7 @@ import os
 import asyncio
 import nest_asyncio
 import numpy as np
-
+ 
 from lightrag import LightRAG, QueryParam
 from lightrag.llm.gemini import gemini_model_complete, gemini_embed
 from lightrag.utils import wrap_embedding_func_with_attrs
