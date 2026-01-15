@@ -21,7 +21,7 @@ curl [https://raw.githubusercontent.com/gusye1234/nano-graphrag/main/tests/mock_
 ```
 
 
-## 2. 下获取演示文档 (A Christmas Carol) 
+## 2. 下获取演示文档 (A Christmas Carol)
 download the demo document of "A Christmas Carol" by Charles Dickens
 ```bash
 curl https://raw.githubusercontent.com/gusye1234/nano-graphrag/main/tests/mock_data.txt > ./book.txt
@@ -37,7 +37,7 @@ LightRAG 需要利用LLM和Embeding模型来完成文档索引和知识库查询
 从ollama处获得：https://ollama.com/library/nomic-embed-text:137m-v1.5-fp16
 
 从hugging face处拉取：https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF
-```bash 
+```bash
 wget https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF/resolve/main/nomic-embed-text-v1.5.f16.gguf
 ```
 修改`Modelfile.nomic`
@@ -154,7 +154,7 @@ ollama create -f Modelfile qwen2m
 ```
 验证模型：
 ```
-ollama list 
+ollama list
 ```
 你应该能看到 qwen2m 出现在列表中。
 
@@ -189,7 +189,7 @@ mkdir -p /home/h50056787/workspaces/LightRAG/tiktoken_cache
 mv /home/h50056787/workspaces/LightRAG/tokens/o200k_base.tiktoken /home/h50056787/workspaces/LightRAG/tiktoken_cache/fb374d419588a4632f3f557e76b4b70aebbca790
 ```
 在 Python 脚本中配置环境，修改 `examples/lightrag_ollama_demo.py`
-```python 
+```python
 import os
 # 指向刚才创建的那个包含哈希文件名文件的目录
 os.environ["TIKTOKEN_CACHE_DIR"] = "/home/h50056787/workspaces/LightRAG/tiktoken_cache"
@@ -253,5 +253,3 @@ cd /home/h50056787/workspaces/LightRAG
 python examples/lightrag_ollama_demo.py
 ```
 检查日志: log文档为：`/LightRAG/lightrag_ollama_demo.log`
-
-
